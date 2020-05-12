@@ -70,7 +70,10 @@ const sign = (privateKey, message) => {
  */
 const verify = (publicKey, message, signature) => {
   // Your code here
-
+  let pub = Buffer.from(publicKey, 'hex');
+  let msg = createHash('sha256').update(message).digest();
+  let sig = Buffer.from(signature, 'hex');
+  return secp256k1.verify(msg, sig, pub);
 };
 
 module.exports = {
