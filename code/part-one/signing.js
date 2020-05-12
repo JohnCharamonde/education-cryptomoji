@@ -15,7 +15,12 @@ const { randomBytes, createHash } = require('crypto');
  */
 const createPrivateKey = () => {
   // Enter your solution here
+  let privKey;
+  do {
+    privKey = randomBytes(32);
+  } while (!secp256k1.privateKeyVerify(privKey));
 
+    return privKey.toString('hex');
 };
 
 /**
@@ -32,7 +37,8 @@ const createPrivateKey = () => {
  *   not hex strings! You'll have to convert the private key.
  */
 const getPublicKey = privateKey => {
-  // Your code here
+  let privKeyBuff = Buffer.from(privKey);
+  console.log(privKeyBuff)
 
 };
 
