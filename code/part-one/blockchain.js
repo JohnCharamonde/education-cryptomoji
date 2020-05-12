@@ -48,7 +48,9 @@ class Block {
    */
   constructor(transactions, previousHash) {
     // Your code here
-
+    this.transactions = transactions;
+    this.previousHash = previousHash;
+    this.calculateHash(5);
   }
 
   /**
@@ -62,7 +64,9 @@ class Block {
    */
   calculateHash(nonce) {
     // Your code here
-
+    let properties = this.transactions.reduce((acc, transaction) => { return acc += transaction.toString(); }, '') + this.previousHash + nonce;
+    this.hash = createHash('sha256').update(properties).digest('hex');
+    this.nonce = nonce;
   }
 }
 
