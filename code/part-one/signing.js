@@ -3,7 +3,6 @@
 const secp256k1 = require('secp256k1');
 const { randomBytes, createHash } = require('crypto');
 
-
 /**
  * A function which generates a new random Secp256k1 private key, returning
  * it as a 64 character hexadecimal string.
@@ -53,8 +52,10 @@ const getPublicKey = privateKey => {
  *   not the message itself!
  */
 const sign = (privateKey, message) => {
-  // Your code here
-
+  let msg = createHash('sha256').update(message).digest();
+  let priv = Buffer.from(privateKey, 'hex')
+  let { signature } = secp256k1.sign(msg, priv)
+  return signature.toString('hex')
 };
 
 /**
