@@ -86,6 +86,7 @@ class Blockchain {
    */
   constructor() {
     // Your code here
+    this.blocks = [new Block([], null)]
 
   }
 
@@ -94,7 +95,7 @@ class Blockchain {
    */
   getHeadBlock() {
     // Your code here
-
+    return this.blocks[this.blocks.length - 1];
   }
 
   /**
@@ -103,7 +104,7 @@ class Blockchain {
    */
   addBlock(transactions) {
     // Your code here
-
+    this.blocks.push(new Block(transactions, this.blocks[this.blocks.length - 1].hash))
   }
 
   /**
@@ -116,8 +117,18 @@ class Blockchain {
    *   we make the blockchain mineable later.
    */
   getBalance(publicKey) {
-    // Your code here
-
+    let balance = 0;
+    for (let i = 0; i < this.blocks.length; i++) {
+      for (let j = 0; j < this.blocks[i].transactions.length; j++) {
+        if (this.blocks[i].transactions[j].source === publicKey) {
+          balance -= this.blocks[i].transactions[j].amount;
+        }
+        if (this.blocks[i].transactions[j].recipient === publicKey) {
+          balance += this.blocks[i].transactions[j].amount;
+        }
+      }
+    }
+    return balance;
   }
 }
 
