@@ -28,7 +28,18 @@ const isValidTransaction = transaction => {
  */
 const isValidBlock = block => {
   // Your code here
+  let properties = block.transactions.reduce((acc, transaction) => { return acc += transaction.toString(); }, '') + block.previousHash + block.nonce;
+  let hash = createHash('sha256').update(properties).digest('hex');
 
+  if(block.hash !== hash) return false;
+
+  for(let i = 0; i < block.transactions.length; i++) {
+    if(!isValidTransaction(block.transactions[i])) {
+      return false;
+    }
+  }
+
+  return true;
 };
 
 /**
