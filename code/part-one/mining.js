@@ -19,8 +19,21 @@ class MineableTransaction {
    */
   constructor(privateKey, recipient = null, amount) {
     // Enter your solution here
+    this.amount = amount;
+    const publicKey = signing.getPublicKey(privateKey);
 
+    if(recipient === null) {
+      this.source = null;
+      this.recipient = publicKey;
+    } else {
+      this.source = publicKey;
+      this.recipient = recipient;
+    }
+
+    const message = this.source + this.recipient + this.amount
+    this.signature = signing.sign(privateKey, message)
   }
+
 }
 
 /**
