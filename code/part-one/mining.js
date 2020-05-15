@@ -48,7 +48,9 @@ class MineableBlock extends Block {
    */
   constructor(transactions, previousHash) {
     // Your code here
-
+    super(transactions, previousHash);
+    this.hash = '';
+    this.nonce = null;
   }
 }
 
